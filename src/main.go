@@ -8,25 +8,31 @@ import (
 
 	"github.com/joho/godotenv"
 
+	"api/src/helpers"
+	"api/src/models"
 	"api/src/router"
 )
 
-var PORT string
-
 func init() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
+	if envLoadError := godotenv.Load(); envLoadError != nil {
+		log.Fatal("[ ERROR ] Failed to load .env file")
 	}
 
-	PORT = os.Getenv("PORT")
-	if PORT == "" {
-		PORT = "9090"
-	}
 }
 
 func main() {
-	router := router.RegisterRoutes()
+	var PORT string
+	db := helpers.CreateDatabaseInstance()
+
+	router := router.RegisterRoutes(db)
+
+	if migrateError := db.AutoMigrate(&models.Food{}, &models.User{}); migrateError != nil {
+		log.Fatal("[ ERROR ] Couldn't migrate models!")
+	}
+
+	if PORT = os.Getenv("PORT"); PORT == "" {
+		PORT = "9090"
+	}
 
 	fmt.Printf("[ OK ] Server is Started and Listening on port: %v", PORT)
 
