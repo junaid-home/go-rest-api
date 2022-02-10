@@ -2,6 +2,20 @@
 
 🔥 Golang Rest Api with basic JWT Authentication and Basic Crud Operations.
 
+## Development Setup
+First of all create a new **.env** file in the root of the project directory. see **example.env** file for all required environment variables.
+
+After setting up environment variables, run the following command to start development and database servers.
+
+```bash
+docker-compose up
+```
+> before running this command you must have **docker** and **docker-compose** installed in your system.
+
+## Production
+In order to deploy this application to production environment, create a docker image from **Dockerfile** and run it on your production server.
+
+
 ## Technology
 - Language (golang)
 - Database (mysql)
