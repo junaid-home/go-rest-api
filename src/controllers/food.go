@@ -28,6 +28,20 @@ func (f FoodController) GetAllFoodItems(db *gorm.DB) http.HandlerFunc {
 	}
 }
 
+func (f FoodController) GetSingleFoodItem(db *gorm.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		params := mux.Vars(r)
+		FoodItem := models.Food{}
+
+		if results := db.Where("name = ?", params["name"]).First(&FoodItem); results.Error != nil || results.RowsAffected < 1 {
+			error.ApiError(w, http.StatusNotFound, "Didn't Find food item with name = "+params["name"])
+			return
+		}
+
+		helpers.RespondWithJSON(w, FoodItem)
+	}
+}
+
 func (f FoodController) AddNewFoodItem(db *gorm.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		FoodItem := models.Food{}
@@ -57,13 +71,18 @@ func (f FoodController) AddNewFoodItem(db *gorm.DB) http.HandlerFunc {
 	}
 }
 
-func (f FoodController) GetSingleFoodItem(db *gorm.DB) http.HandlerFunc {
+func (f FoodController) DeleteSingleFoodItem(db *gorm.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		params := mux.Vars(r)
 		FoodItem := models.Food{}
 
-		if results := db.Where("name = ?", params["name"]).First(&FoodItem); results.Error != nil || results.RowsAffected < 1 {
-			error.ApiError(w, http.StatusBadRequest, "Didn't Find food item with name = "+params["name"])
+		if results := db.Where("id = ?", params["id"]).First(&FoodItem); results.Error != nil || results.RowsAffected < 1 {
+			error.ApiError(w, http.StatusNotFound, "Didn't Find food item with id = "+params["id"])
+			return
+		}
+
+		if results := db.Delete(&FoodItem); results.Error != nil || results.RowsAffected < 1 {
+			error.ApiError(w, http.StatusInternalServerError, "Failed to Delete Item from the database!")
 			return
 		}
 
