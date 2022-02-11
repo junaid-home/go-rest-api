@@ -105,13 +105,13 @@ Get All Food Items
 ```json
 [
     {
-        "id": "123e4567-e89b-12d3-a456-426614174000",
+        "id": "1",
         "name": "Apples",
         "quantity": 100,
         "selling_price": "100 USD",
     },
     {
-        "id": "123e4567-e89b-12d3-a456-426614174000",
+        "id": "2",
         "name": "Mangos",
         "quantity": 97,
         "selling_price": "120 USD",
@@ -127,7 +127,7 @@ Get single Food Item by its name. name should be lowercase (e.g /food/apples)
 
 ```json
 {
-    "id": "123e4567-e89b-12d3-a456-4265674174000",
+    "id": "1",
     "name": "Apples",
     "quantity": 100,
     "selling_price": "100 USD",
@@ -152,13 +152,13 @@ Add a new food item to the database.
 
 ```json
 {
-    "id": "123e4567-e89b-12d3-a456-426614174000",
+    "id": "1",
     "name": "Oranges",
     "quantity": 44,
     "selling_price": "80 USD",
 }
 ```
-> **DELETE** &nbsp; ``/food/<name>``
+> **DELETE** &nbsp; ``/food/<id>``
 
 Delete one Food Item from the database.
 
@@ -166,7 +166,7 @@ Delete one Food Item from the database.
 
 ```json
 {
-    "id": "123e4567-e89b-12d3-a456-426614174000",
+    "id": "1",
     "name": "Oranges",
     "quantity": 44,
     "selling_price": "80 USD",
