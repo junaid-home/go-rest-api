@@ -19,5 +19,10 @@ func RegisterRoutes(db *gorm.DB) *mux.Router {
 	router.HandleFunc("/food/{name}", FoodController.GetSingleFoodItem(db)).Methods(http.MethodGet)
 	router.HandleFunc("/food/{id}", FoodController.DeleteSingleFoodItem(db)).Methods(http.MethodDelete)
 
+	UserController := controller.UserController{}
+
+	router.HandleFunc("/auth/login", UserController.LoginUser(db)).Methods(http.MethodPost)
+	router.HandleFunc("/auth/signup", UserController.SignupUser(db)).Methods(http.MethodPost)
+
 	return router
 }
