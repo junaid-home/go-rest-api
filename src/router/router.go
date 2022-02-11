@@ -7,6 +7,7 @@ import (
 	"gorm.io/gorm"
 
 	controller "api/src/controllers"
+	middleware "api/src/middlewares"
 )
 
 func RegisterRoutes(db *gorm.DB) *mux.Router {
@@ -14,10 +15,10 @@ func RegisterRoutes(db *gorm.DB) *mux.Router {
 
 	FoodController := controller.FoodController{}
 
-	router.HandleFunc("/food/all", FoodController.GetAllFoodItems(db)).Methods(http.MethodGet)
-	router.HandleFunc("/food", FoodController.AddNewFoodItem(db)).Methods(http.MethodPost)
-	router.HandleFunc("/food/{name}", FoodController.GetSingleFoodItem(db)).Methods(http.MethodGet)
-	router.HandleFunc("/food/{id}", FoodController.DeleteSingleFoodItem(db)).Methods(http.MethodDelete)
+	router.HandleFunc("/food/all", middleware.CheckAuth(FoodController.GetAllFoodItems(db))).Methods(http.MethodGet)
+	router.HandleFunc("/food", middleware.CheckAuth(FoodController.AddNewFoodItem(db))).Methods(http.MethodPost)
+	router.HandleFunc("/food/{name}", middleware.CheckAuth(FoodController.GetSingleFoodItem(db))).Methods(http.MethodGet)
+	router.HandleFunc("/food/{id}", middleware.CheckAuth(FoodController.DeleteSingleFoodItem(db))).Methods(http.MethodDelete)
 
 	UserController := controller.UserController{}
 
