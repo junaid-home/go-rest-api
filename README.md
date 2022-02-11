@@ -55,7 +55,7 @@ Login with username/email and password.
 {
     "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
     "user": {
-        "id": "123e4567-e89b-12d3-a456-426614174000",
+        "id": "1",
         "name": "ABC 123",
         "username": "abc123",
         "email": "admin@abc123.io",
@@ -84,7 +84,7 @@ Create a new user in the database.
 {
     "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
     "user": {
-        "id": "123e4567-e89b-12d3-a456-426614174000",
+        "id": "1",
         "name": "ABC 123",
         "username": "abc123",
         "email": "admin@abc123.io",
