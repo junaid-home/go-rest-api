@@ -1,26 +1,34 @@
 package controller
 
 import (
-	"api/src/helpers"
-	"api/src/models"
 	"encoding/json"
 	"net/http"
 
 	"gorm.io/gorm"
+
+	"api/src/helpers"
+	"api/src/models"
 )
 
 type FoodController struct{}
 
+var error = helpers.CustomError{}
+
 func (f FoodController) GetAllFoodItems(db *gorm.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("Ok Google!!!"))
+		FoodItems := []models.Food{}
+
+		if results := db.Find(&FoodItems); results.Error != nil {
+			error.ApiError(w, http.StatusInternalServerError, "Failed To Fetch Food Items from database!")
+			return
+		}
+
+		helpers.RespondWithJSON(w, FoodItems)
 	}
 }
 
 func (f FoodController) AddNewFoodItem(db *gorm.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		error := helpers.CustomError{}
-
 		FoodItem := models.Food{}
 		json.NewDecoder(r.Body).Decode(&FoodItem)
 
@@ -44,6 +52,6 @@ func (f FoodController) AddNewFoodItem(db *gorm.DB) http.HandlerFunc {
 			return
 		}
 
-		json.NewEncoder(w).Encode(FoodItem)
+		helpers.RespondWithJSON(w, FoodItem)
 	}
 }
