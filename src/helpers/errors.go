@@ -14,6 +14,7 @@ func (e CustomError) ApiError(w http.ResponseWriter, status int, message string)
 	error["Message"] = message
 	error["Status"] = strconv.Itoa(status)
 
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(status)
 	json.NewEncoder(w).Encode(error)
 

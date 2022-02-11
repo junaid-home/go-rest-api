@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"github.com/gorilla/mux"
 	"gorm.io/gorm"
 
 	"api/src/helpers"
@@ -49,6 +50,20 @@ func (f FoodController) AddNewFoodItem(db *gorm.DB) http.HandlerFunc {
 
 		if result := db.Create(&FoodItem); result.Error != nil {
 			error.ApiError(w, http.StatusInternalServerError, "Failed To Add new Food Item in database!")
+			return
+		}
+
+		helpers.RespondWithJSON(w, FoodItem)
+	}
+}
+
+func (f FoodController) GetSingleFoodItem(db *gorm.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		params := mux.Vars(r)
+		FoodItem := models.Food{}
+
+		if results := db.Where("name = ?", params["name"]).First(&FoodItem); results.Error != nil || results.RowsAffected < 1 {
+			error.ApiError(w, http.StatusBadRequest, "Didn't Find food item with name = "+params["name"])
 			return
 		}
 
