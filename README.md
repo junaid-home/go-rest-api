@@ -22,8 +22,7 @@ In order to deploy this application to production environment, create a docker i
 ### Libraries
 - Router (gorilla/mux)
 - Server (net/http)
-- JWT (dgrijalva/go-jwt)
-<!-- - Password Encryption (bcrypt) -->
+- JWT (dgrijalva/go-jwt)<!-- - Password Encryption (bcrypt) -->
 - Database ORM (gorm) 
 - Live Reload (cosmtrek/air)
 
